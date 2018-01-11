@@ -37,7 +37,7 @@ function hitGladiator(gladiatorIndex){
     randomGladiator.speed = (randomGladiator.initialSpeed*(randomGladiator.health/randomGladiator.initialHealth)).toFixed(3);
     if (randomGladiator.health <= 0){
         gladiatorDie(randomGladiatorIndex);
-    } else if (15 <= randomGladiator.health <= 30) {
+    } else if (15 <= randomGladiator.health && randomGladiator.health <= 30) {
         randomGladiator.speed = (randomGladiator.speed)*3;
     }
     setTimeout(hitGladiator, 5000/gladiators[gladiatorIndex].speed, gladiatorIndex);
@@ -69,6 +69,14 @@ function randomGladiatorIndexFunction(gladiatorIndex) {
     return randomIndex;
 } 
 function start () {
+    if (stopWar) {
+        return;
+    }
+    if (gladiators.length == 1) { 
+        console.log(gladiators[0].name + " won the battle with health x" + gladiators[0].health);
+        stopWar = true;
+        return;
+    }
     gladiators.forEach(function(gladiator, index) {
         hitGladiator(index);
     });
