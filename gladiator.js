@@ -1,5 +1,6 @@
 const x = 10;
 const gladiators = [];
+const actionsDiv = document.getElementById('actions');
 let stopWar = false;
 const Gladiator = function (name, health, power, speed) {
     const randomHealth = Math.floor(Math.random() * 20) + 80,
@@ -24,15 +25,18 @@ function hitGladiator(gladiatorIndex){
     if (stopWar) {
         return;
     }
-    if (gladiators.length == 1) { 
-        console.log(gladiators[0].name + " won the battle with health x" + gladiators[0].health);
+    if (gladiators.length == 1) {
+        actionsDiv.innerHTML +='<p class="bg-success text-white p-2">' + gladiators[0].name + " won the battle with health x" + gladiators[0].health + '</p>'; 
+        // console.log(gladiators[0].name + " won the battle with health x" + gladiators[0].health);
         stopWar = true;
         return;
     }
     const currentGladiator = gladiators[gladiatorIndex],
           randomGladiatorIndex = randomGladiatorIndexFunction(gladiatorIndex);
           randomGladiator = gladiators[randomGladiatorIndex];
-    console.log(currentGladiator.name + " x " +  currentGladiator.health + " hits "  + randomGladiator.name + " x " +  randomGladiator.health + " with power" + currentGladiator.power);
+    
+    actionsDiv.innerHTML += '<p class="bg-warning text-white p-2">'+ currentGladiator.name + " x " +  currentGladiator.health + " hits "  + randomGladiator.name + " x " +  randomGladiator.health + " with power" + currentGladiator.power +'</p>';
+    // console.log(currentGladiator.name + " x " +  currentGladiator.health + " hits "  + randomGladiator.name + " x " +  randomGladiator.health + " with power" + currentGladiator.power);
     randomGladiator.health = randomGladiator.health - currentGladiator.power;
     randomGladiator.speed = (randomGladiator.initialSpeed*(randomGladiator.health/randomGladiator.initialHealth)).toFixed(3);
     if (randomGladiator.health <= 0){
@@ -44,23 +48,25 @@ function hitGladiator(gladiatorIndex){
 };
 function gladiatorDie(gladiatorIndex) {
     stopWar = true;
-    console.log(gladiators[gladiatorIndex].name + " dying");
+    actionsDiv.innerHTML +='<p class="bg-danger text-white p-2">' + gladiators[gladiatorIndex].name + " dying" + '<p>';
+    // console.log(gladiators[gladiatorIndex].name + " dying");
     const CaesarDecision = Math.floor(Math.random() * 2); //0-Finish him(gladiator leaves the arena), 1- "Live" (gladiator recovers and get +50 health points)
     const logCaesarDecision = CaesarDecision ? "Caesar showed 👍| " +  gladiators[gladiatorIndex].name : "Caesar showed 👎 to " + gladiators[gladiatorIndex].name;    
     if(CaesarDecision == 0){
         gladiators.splice(gladiatorIndex, 1);
-        if (gladiators.length == 1) { 
-            console.log(gladiators[0].name + " won the battle with health x" + gladiators[0].health);
+        if (gladiators.length == 1) {
+            actionsDiv.innerHTML +='<p class="bg-success text-white p-2">'+ gladiators[0].name + " won the battle with health x" + gladiators[0].health + '</p>'; 
+            // console.log(gladiators[0].name + " won the battle with health x" + gladiators[0].health);
             stopWar = true;
         }
     } else if(CaesarDecision == 1){
         gladiators[gladiatorIndex].health += 50;
     }
-    console.log(logCaesarDecision);
+    actionsDiv.innerHTML +='<p class="bg-success text-white p-2">' + logCaesarDecision + '</p>';
+    // console.log(logCaesarDecision);
     stopWar = false;
     start();
 }
-console.log(gladiators);
 function randomGladiatorIndexFunction(gladiatorIndex) {
     randomIndex = Math.floor(Math.random()*gladiators.length);
     if (randomIndex == gladiatorIndex) {
@@ -72,8 +78,9 @@ function start () {
     if (stopWar) {
         return;
     }
-    if (gladiators.length == 1) { 
-        console.log(gladiators[0].name + " won the battle with health x" + gladiators[0].health);
+    if (gladiators.length == 1) {
+        actionsDiv.innerHTML +='<p class="bg-success text-white p-2">' + cgladiators[0].name + " won the battle with health x" + gladiators[0].health + '</p>'; 
+        // console.log(cgladiators[0].name + " won the battle with health x" + gladiators[0].health);
         stopWar = true;
         return;
     }
