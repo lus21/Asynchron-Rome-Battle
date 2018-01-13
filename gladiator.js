@@ -1,27 +1,30 @@
-const x = 10;
+const gladiatorsNumber = 10;
 const gladiators = [];
 const actionsDiv = document.getElementById('actions');
 let stopWar = false;
-const Gladiator = function (name, health, power, speed) {
-    const randomHealth = Math.floor(Math.random() * 20) + 80,
-          randomSpeed = Math.floor((Math.random() * 3+2)*1000)/1000;
-    this.name = faker.name.findName();
-    this.health = randomHealth;
-    this.power = Math.floor((Math.random() * 3+2)*10)/10;
-    this.speed = randomSpeed;
-    this.initialHealth = randomHealth;
-    this.initialSpeed = randomSpeed;
-}
+
+var Gladiator = class {
+    constructor(name, health, power, speed) {
+        const randomHealth = Math.floor(Math.random() * 20) + 80,
+            randomSpeed = Math.floor((Math.random() * 3+2)*1000)/1000;
+        this.name = faker.name.findName();
+        this.health = randomHealth;
+        this.power = Math.floor((Math.random() * 3+2)*10)/10;
+        this.speed = randomSpeed;
+        this.initialHealth = randomHealth;
+        this.initialSpeed = randomSpeed;
+    }
+};
 
 function generateGladiators() {
-    for (let i = 0; i<x; i++) {
+    for (let i = 0; i < gladiatorsNumber; i++) {
         const randomGladiator = new Gladiator();
         gladiators.push(randomGladiator)
     }
 }
 generateGladiators();
 
-function hitGladiator(gladiatorIndex){
+function hitGladiator(gladiatorIndex) {
     if (stopWar) {
         return;
     }
@@ -54,16 +57,10 @@ function gladiatorDie(gladiatorIndex) {
     const logCaesarDecision = CaesarDecision ? "Caesar showed 👍| " +  gladiators[gladiatorIndex].name : "Caesar showed 👎 to " + gladiators[gladiatorIndex].name;    
     if(CaesarDecision == 0){
         gladiators.splice(gladiatorIndex, 1);
-        if (gladiators.length == 1) {
-            actionsDiv.innerHTML +='<p class="bg-success text-white p-2">'+ gladiators[0].name + " won the battle with health x" + gladiators[0].health + '</p>'; 
-            // console.log(gladiators[0].name + " won the battle with health x" + gladiators[0].health);
-            stopWar = true;
-        }
     } else if(CaesarDecision == 1){
         gladiators[gladiatorIndex].health += 50;
     }
     actionsDiv.innerHTML +='<p class="bg-success text-white p-2">' + logCaesarDecision + '</p>';
-    // console.log(logCaesarDecision);
     stopWar = false;
     start();
 }
